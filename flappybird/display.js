@@ -2,8 +2,10 @@ function Display() {
   // function Display(element, x, y) {
   // element.position(x, y);
   this.score = 0;
+  this.distance = 0;
   this.hitCount = 0;
-  this.scoreDisplay = createElement('h3', 'Score: 0. Hit Count: 0');
+  this.penalty = 0;
+  this.scoreDisplay = createElement('h3', 'Distance: 0. Hits: 0. Score: 0');
   //createSpan('Score: ', this.score);
   // this.display = createSpan(`Score: ${this.score}`);
 
@@ -15,12 +17,10 @@ function Display() {
 
 
   this.update = function () {
-    if (bird.getHitCount()) {
-      console.log('bird Crashed');
-      this.hitCount = bird.getHitCount();
-    }
-    this.score = Math.floor(frameCount / 40);
-    this.scoreDisplay.html(`Score: ${this.score}. Hit Count: ${this.hitCount}`)
-    // console.log('score: ', this.score);
+    this.hitCount = bird.getHitCount();
+    this.distance = Math.floor(frameCount / 20);
+    this.penalty = this.hitCount * 4;
+    this.score = (this.distance * 2) - this.penalty;
+    this.scoreDisplay.html(`Distance: ${this.distance}. Hits: ${this.hitCount}. Score: ${this.score}`)
   }
 }

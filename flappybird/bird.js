@@ -1,6 +1,8 @@
-function Bird() {
+function Bird(playerImage) {
+  this.playerImage = playerImage;
   this.y = height / 2;
   this.x = 100;
+  this.imgHeight = 45;
 
   this.gravity = 0.6;
   this.jump = -15;
@@ -10,7 +12,10 @@ function Bird() {
   this.crashed = false;
   this.highlightDuration = 0;
   this.gameover = false;
-  this.crashSound = loadSound('assets/tim_crash_short.mp3');
+  this.hitCeilingFloor = false;
+  this.hitPipe = false;
+  this.ranSound = false;
+  this.crashSound = loadSound('assets/sounds/tim_crash_short.mp3');
 
   this.show = () => {
     fill(255);
@@ -18,14 +23,16 @@ function Bird() {
       fill(255, 0, 0);
       // this.crashSound.play();
       this.crashed = false;
-      this.gameover = true;
-      this.hitCount += 1;
+      // this.gameover = true;
     }
     if (this.highlightDuration !== 0 && (frameCount - this.highlightDuration > 5)) {
+      // this.hitCount += 1;
       this.highlightDuration = 0;
     }
 
-    ellipse(this.x, this.y, 32, 32);
+    // ellipse(this.x, this.y, 32, 32);
+    imageMode(CENTER);
+    image(playerImage, this.x, this.y, this.imgHeight, this.imgHeight);
     noStroke();
   }
 
@@ -35,7 +42,12 @@ function Bird() {
   }
 
   this.crash = () => {
-    this.crashSound.play();
+    if ((this.hitCeilingFloor && !this.ranSound || this.hitPipe)) {
+      this.crashSound.play();
+      this.hitCount += 1;
+      this.ranSound = true;
+      this.hitPipe = false;
+    }
     this.crashed = true;
     this.highlightDuration = frameCount;
   }
@@ -49,11 +61,15 @@ function Bird() {
 
     if (this.y > height) {
       this.y = height;
+      this.hitCeilingFloor = true;
       if (!this.gameover) this.crash();
-    }
-    if (this.y < 0) {
+    } else if (this.y < 0) {
       this.y = 0;
+      this.hitCeilingFloor = true;
       if (!this.gameover) this.crash();
+    } else {
+      this.hitCeilingFloor = false;
+      this.ranSound = false;
     }
   }
 

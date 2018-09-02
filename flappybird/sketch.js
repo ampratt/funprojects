@@ -1,29 +1,48 @@
 let bird;
 let pipes = [];
 let scoreDisplay;
-this.insert = 60;
-this.prevPipeFrame = 0;
 let crashSound;
+
+let insertFrequency = 60;
+let prevPipeFrame = 0;
+
+var backgroundImage;
+let playerImage;
+let c;
+function preload() {
+  // backgroundImage = loadImage('assets/img/backgrounds/rainbow-background-vector.jpg');
+  backgroundImage = loadImage('assets/img/backgrounds/rainbow-drawing.jpg');
+  // playerImage = loadImage('assets/img/players/superman-logo.png');
+  playerImage = loadImage('assets/img/players/unicorn.png');
+}
 
 function setup() {
   // put setup code here
-  crashSound = loadSound('assets/tim_crash_short.mp3');
+  crashSound = loadSound('assets/sounds/tim_crash_short.mp3');
   // createCanvas(400, 600);
-  bird = new Bird();
+  bird = new Bird(playerImage);
   this.scoreDisplay = new Display(bird);
-  var cnv = createCanvas(windowWidth, windowHeight - 60);
-  cnv.style('display', 'block');
+  // var cnv = createCanvas(650, 910);
+  // var cnv = createCanvas(595, 490);
+  var cnv = createCanvas(windowWidth, windowHeight - 65);
+  // cnv.style('display', 'block');
   pipes.push(new Pipe());
+  //   backgroundImage.loadPixels();
+  //   // get color of middle pixel
+  //   c = backgroundImage.get(backgroundImage.width / 2, backgroundImage.height / 2);
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight - 60);
+  resizeCanvas(windowWidth, windowHeight - 65);
 }
 
 function keyPressed() {
   if (key === ' ') {
     bird.up();
   }
+}
+function mousePressed() {
+  bird.up();
 }
 
 function getRandomPipeTime(min, max) {
@@ -38,7 +57,11 @@ function draw() {
   this.scoreDisplay.update();
 
   // put drawing code here
-  background(0, 0, 255);
+  // background(c);
+  // // imageMode(CENTER);
+  background(202, 235, 254);
+  imageMode(CORNERS);
+  image(backgroundImage, 0, 0, windowWidth, windowHeight - 65);
 
   bird.update();
   bird.show();
@@ -64,10 +87,12 @@ function draw() {
 
   // let insert = getRandomPipeTime(30, 90);
   // if (frameCount % 70 === 0) {
-  if (frameCount > this.prevPipeFrame + this.insert) {
-    this.prevPipeFrame = frameCount;
+  if (frameCount >
+    prevPipeFrame + insertFrequency) {
+
+    prevPipeFrame = frameCount;
     pipes.push(new Pipe());
-    this.insert = getRandomPipeTime(30, 90);
+    insertFrequency = getRandomPipeTime(50, 90);
   }
 
 }
