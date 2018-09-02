@@ -1,6 +1,6 @@
-function Bird(playerImage, crashSound) {
+export default function Bird(p, playerImage, crashSound) {
   this.playerImage = playerImage;
-  this.y = height / 2;
+  this.y = p.height / 2;
   this.x = 100;
   this.imgHeight = 45;
 
@@ -18,22 +18,22 @@ function Bird(playerImage, crashSound) {
   this.crashSound = crashSound; // loadSound('assets/sounds/tim_crash_short.mp3');
 
   this.show = () => {
-    fill(255);
+    p.fill(255);
     if (this.crashed || this.highlightDuration !== 0) {
-      fill(255, 0, 0);
+      p.fill(255, 0, 0);
       // this.crashSound.play();
       this.crashed = false;
       // this.gameover = true;
     }
-    if (this.highlightDuration !== 0 && (frameCount - this.highlightDuration > 5)) {
+    if (this.highlightDuration !== 0 && (p.frameCount - this.highlightDuration > 5)) {
       // this.hitCount += 1;
       this.highlightDuration = 0;
     }
 
     // ellipse(this.x, this.y, 32, 32);
-    imageMode(CENTER);
-    image(playerImage, this.x, this.y, this.imgHeight, this.imgHeight);
-    noStroke();
+    p.imageMode(p.CENTER);
+    p.image(playerImage, this.x, this.y, this.imgHeight, this.imgHeight);
+    p.noStroke();
   }
 
   this.up = () => {
@@ -50,7 +50,7 @@ function Bird(playerImage, crashSound) {
       this.hitPipe = false;
     }
     this.crashed = true;
-    this.highlightDuration = frameCount;
+    this.highlightDuration = p.frameCount;
   }
 
   this.getHitCount = () => this.hitCount;
@@ -60,8 +60,8 @@ function Bird(playerImage, crashSound) {
     this.velocity *= 0.95;
     this.y += this.velocity;
 
-    if (this.y > height) {
-      this.y = height;
+    if (this.y > p.height) {
+      this.y = p.height;
       this.hitCeilingFloor = true;
       if (!this.gameover) this.crash();
     } else if (this.y < 0) {

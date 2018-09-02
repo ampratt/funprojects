@@ -1,15 +1,19 @@
 let bird;
 let pipes = [];
 let scoreDisplay;
-let crashSound;
+// let crashSound;
+// let backgroundMusic;
 
 let insertFrequency = 60;
 let prevPipeFrame = 0;
 
-var backgroundImage;
+let backgroundImage;
 let playerImage;
 let c;
 function preload() {
+  soundFormats('mp3', 'ogg');
+  crashSound = loadSound('assets/sounds/tim_crash_short_loud.mp3');
+  backgroundMusic = loadSound('assets/music/bensound-theduel.mp3');
   // backgroundImage = loadImage('assets/img/backgrounds/rainbow-background-vector.jpg');
   backgroundImage = loadImage('assets/img/backgrounds/rainbow-drawing.jpg');
   // playerImage = loadImage('assets/img/players/superman-logo.png');
@@ -18,9 +22,8 @@ function preload() {
 
 function setup() {
   // put setup code here
-  crashSound = loadSound('assets/sounds/tim_crash_short.mp3');
   // createCanvas(400, 600);
-  bird = new Bird(playerImage);
+  bird = new Bird(playerImage, crashSound);
   this.scoreDisplay = new Display(bird);
   // var cnv = createCanvas(650, 910);
   // var cnv = createCanvas(595, 490);
@@ -30,6 +33,8 @@ function setup() {
   //   backgroundImage.loadPixels();
   //   // get color of middle pixel
   //   c = backgroundImage.get(backgroundImage.width / 2, backgroundImage.height / 2);
+  this.backgroundMusic.setVolume(0.7);
+  this.backgroundMusic.play();
 }
 
 function windowResized() {
