@@ -1,5 +1,5 @@
-export default function Pipe(p) {
-  var spacing = p.random(50, p.height / 4);
+export default function Pipe(p, pipeColors) {
+  var spacing = p.random(55, p.height / 3);
   var centerY = p.random(spacing, p.height - spacing);
 
   this.top = centerY - spacing / 2;
@@ -11,7 +11,6 @@ export default function Pipe(p) {
   this.alreadyRegistered = false;
 
   this.isHitBy = function (bird) {
-    // if (this.alreadyRegistered) return -1
     if (this.alreadyRegistered &&
       (bird.y < this.top || bird.y > p.height - this.bottom)
       && (bird.x > this.x + this.w)) {
@@ -19,13 +18,11 @@ export default function Pipe(p) {
       this.alreadyRegistered = false;
       // bird.crash();
       // bird.crashed = false;
-      // console.log('cleared')
       return 0;
     }
     if (!this.alreadyRegistered &&
       (bird.y < this.top || bird.y > p.height - this.bottom)
       && (bird.x > this.x && bird.x < this.x + this.w)) {
-      // console.log('registered CRASHED!')
       this.crashed = true;
       // bird.crashed = true;
       bird.hitPipe = true;
@@ -39,7 +36,6 @@ export default function Pipe(p) {
       this.crashed = false;
       bird.crash();
       // bird.crashed = false;
-      // console.log('cleared 2')
       this.alreadyRegistered = false;
       return 0;
     }
@@ -47,8 +43,8 @@ export default function Pipe(p) {
   }
 
   this.show = () => {
-    // fill(255);
-    p.fill(250, 133, 159);
+    // p.fill(250, 133, 159);
+    p.fill(pipeColors[0], pipeColors[1], pipeColors[2]);
     if (this.crashed) {
       p.fill(0, 0, 0);
     }

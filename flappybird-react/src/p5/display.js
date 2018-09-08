@@ -22,11 +22,6 @@ export default function Display(p, bird, music, crashSound) {
   this.button.mousePressed(quitGame);
 
 
-  this.show = function () {
-    this.display;
-    // createSpan(`Score: ${this.score}`);
-  }
-
   function quitGame() {
     music.stop();
     crashSound.stop();

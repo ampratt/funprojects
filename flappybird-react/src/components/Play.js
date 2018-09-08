@@ -7,7 +7,7 @@ class Play extends Component {
   render() {
     return (
       <div>
-        <P5Wrapper sketch={sketch} rotation={50} />
+        <P5Wrapper sketch={sketch} player={'UNICORN'} />
       </div>
     );
   }
