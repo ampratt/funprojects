@@ -1,5 +1,4 @@
 export default function Pipe(p) {
-
   var spacing = p.random(50, p.height / 4);
   var centerY = p.random(spacing, p.height - spacing);
 

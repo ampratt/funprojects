@@ -20,19 +20,25 @@ import { Link } from 'react-router-dom'
 
 const Home = () => (
   <div>
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <nav>
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/settings'>Settings</Link></li>
-          <li><Link to='/play'>Play</Link></li>
-        </ul>
-      </nav>
-      <h1 className="App-title">Welcome to FlappyBird</h1>
-    </header>
-    <h1>Welcome to the Flappybird Heroes game!</h1>
+    <h1>Flappybird Heroes</h1>
+    <Link className="settingsBtn" to='/settings'>Settings</Link>
+    <div className="menuSelectors">
+      <br></br>
+      <Link className="playBtn" to='/play'>Play</Link>
+    </div>
   </div>
 )
 
 export default Home
+
+  // <header className="App-header">
+  //   <img src={logo} className="App-logo" alt="logo" />
+  //   <nav>
+  //     <ul>
+  //       <li><Link to='/'>Home</Link></li>
+  //       <li><Link to='/settings'>Settings</Link></li>
+  //       <li><Link to='/play'>Play</Link></li>
+  //     </ul>
+  //   </nav>
+  //   <h1 className="App-title">Welcome to FlappyBird</h1>
+  // </header>

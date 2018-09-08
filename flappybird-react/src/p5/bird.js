@@ -42,7 +42,7 @@ export default function Bird(p, playerImage, crashSound) {
   }
 
   this.crash = () => {
-    if ((this.hitCeilingFloor && !this.ranSound || this.hitPipe)) {
+    if ((this.hitCeilingFloor && !this.ranSound) || this.hitPipe) {
       this.crashSound.setVolume(0.8);
       this.crashSound.play();
       this.hitCount += 1;

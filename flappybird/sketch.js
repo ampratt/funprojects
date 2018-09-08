@@ -24,7 +24,7 @@ function setup() {
   // put setup code here
   // createCanvas(400, 600);
   bird = new Bird(playerImage, crashSound);
-  this.scoreDisplay = new Display(bird);
+  scoreDisplay = new Display(bird);
   // var cnv = createCanvas(650, 910);
   // var cnv = createCanvas(595, 490);
   var cnv = createCanvas(windowWidth, windowHeight - 65);
@@ -33,8 +33,8 @@ function setup() {
   //   backgroundImage.loadPixels();
   //   // get color of middle pixel
   //   c = backgroundImage.get(backgroundImage.width / 2, backgroundImage.height / 2);
-  this.backgroundMusic.setVolume(0.7);
-  this.backgroundMusic.play();
+  backgroundMusic.setVolume(0.7);
+  backgroundMusic.play();
 }
 
 function windowResized() {
@@ -58,8 +58,8 @@ function getRandomPipeTime(min, max) {
 function draw() {
 
   // update score
-  this.scoreDisplay.show();
-  this.scoreDisplay.update();
+  scoreDisplay.show();
+  scoreDisplay.update();
 
   // put drawing code here
   // background(c);

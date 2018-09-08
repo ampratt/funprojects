@@ -1,6 +1,10 @@
 import Bird from './bird';
 import Pipe from './pipe';
 import Display from './display';
+import '../../node_modules/p5/lib/addons/p5.sound.min.js';
+
+// assets
+// import { unicorn } from '../assets/img/players/unicorn.png';
 
 export default function sketch(p) {
   let bird;
@@ -18,34 +22,29 @@ export default function sketch(p) {
 
   p.preload = function () {
     p.soundFormats('mp3', 'ogg');
-    crashSound = p.loadSound('../assets/sounds/tim_crash_short_loud.mp3');
-    backgroundMusic = p.loadSound('../assets/music/bensound-theduel.mp3');
-    // backgroundImage = p.loadImage('../assets/img/backgrounds/rainbow-background-vector.jpg');
-    backgroundImage = p.loadImage('../assets/img/backgrounds/rainbow-drawing.jpg');
-    // playerImage = p.loadImage('../assets/img/players/superman-logo.png');
-    playerImage = p.loadImage('../assets/img/players/unicorn.png');
+    crashSound = p.loadSound('/assets/sounds/tim_crash_short_loud.mp3');
+    backgroundMusic = p.loadSound('/assets/music/bensound-theduel.mp3');
+    backgroundImage = p.loadImage('/assets/img/backgrounds/rainbow-drawing.jpg');
+    playerImage = p.loadImage('/assets/img/players/unicorn.png');
   }
 
   p.setup = function () {
     // put setup code here
-    // createCanvas(400, 600);
     bird = new Bird(p, playerImage, crashSound);
-    this.scoreDisplay = new Display(p, bird);
-    // var cnv = createCanvas(650, 910);
-    // var cnv = createCanvas(595, 490);
-    var cnv = p.createCanvas(p.windowWidth, p.windowHeight - 65);
+    scoreDisplay = new Display(p, bird, backgroundMusic, crashSound);
+    var cnv = p.createCanvas(p.windowWidth, p.windowHeight - 60);
     // cnv.style('display', 'block');
     pipes.push(new Pipe(p));
     //   backgroundImage.loadPixels();
     //   // get color of middle pixel
     //   c = backgroundImage.get(backgroundImage.width / 2, backgroundImage.height / 2);
-    this.backgroundMusic.setVolume(0.7);
-    this.backgroundMusic.play();
+    backgroundMusic.setVolume(0.7);
+    backgroundMusic.play();
   };
 
 
   p.windowResized = function () {
-    p.resizeCanvas(p.windowWidth, p.windowHeight - 65);
+    p.resizeCanvas(p.windowWidth, p.windowHeight - 60);
   }
 
   p.keyPressed = function () {
@@ -57,7 +56,7 @@ export default function sketch(p) {
     bird.up();
   }
 
-  function getRandomPipeTime(min, max) {
+  function _getRandomPipeTime(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
     // return Math.floor(Math.random() * (max - min + 1) + min);
   }
@@ -65,8 +64,8 @@ export default function sketch(p) {
   p.draw = function () {
 
     // update score
-    this.scoreDisplay.show();
-    this.scoreDisplay.update();
+    scoreDisplay.show();
+    scoreDisplay.update();
 
     // put drawing code here
     // background(c);
@@ -103,8 +102,8 @@ export default function sketch(p) {
       prevPipeFrame + insertFrequency) {
 
       prevPipeFrame = p.frameCount;
-      pipes.push(new Pipe());
-      insertFrequency = this.getRandomPipeTime(50, 90);
+      pipes.push(new Pipe(p));
+      insertFrequency = _getRandomPipeTime(50, 90);
     }
   }
 
