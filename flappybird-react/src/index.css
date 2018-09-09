@@ -37,15 +37,42 @@ body {
     font-size: 1.5rem;
 }
 
-.playerSelectors {
+.difficultiesWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+    margin: 10px;
+}
+.playerSelectorsWrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     padding: 0 10px;
+    margin: 10px;
 }
 .playerSelector {
-    margin: 5px;
+    margin: 8px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    transition: 0.3s;
+}
+.playerSelector:hover, .playerSelector:active {
+    transform: scale(1.1);
+    /* transform: scale3d(1, 1.2, 1.5); */
+}
+.playerSelectorLogo {
+    width: 55px;
+    height: auto;
+}
+.selected, .selected > * {
+    color: #09e905 !important ;
+    transform: scale(1.1);
 }
 
 .settingsBtn {
@@ -85,4 +112,20 @@ body {
     font-size: 1rem;
     font-family: 'Bangers', cursive;
     letter-spacing: 1px
+}
+
+#p5_loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+}
+
+/* settings */
+.difficultyBtn {
+    margin: 10px;
+}
+.difficultyBtn:hover {
+    cursor: pointer;
 }

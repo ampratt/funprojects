@@ -1,5 +1,6 @@
-export default function Pipe(p, pipeColors) {
-  var spacing = p.random(55, p.height / 3);
+export default function Pipe(p, pipeColors, difficulty) {
+
+  var spacing = _getDifficulty(difficulty)
   var centerY = p.random(spacing, p.height - spacing);
 
   this.top = centerY - spacing / 2;
@@ -9,6 +10,17 @@ export default function Pipe(p, pipeColors) {
   this.speed = 3;
   this.crashed = false;
   this.alreadyRegistered = false;
+
+  function _getDifficulty(difficulty) {
+    if (difficulty === 'EASY') {
+      return p.random(85, p.height / 2);
+    } else if (difficulty === 'MEDIUM') {
+      return p.random(65, p.height / 3)
+    } else if (difficulty === 'HARD') {
+      return p.random(55, p.height / 5)
+    }
+    return p.random(55, p.height / 3);
+  }
 
   this.isHitBy = function (bird) {
     if (this.alreadyRegistered &&

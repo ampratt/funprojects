@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-const Settings = () => (
+const Settings = ({ setDifficulty }) => (
   <div>
-    <h1>This will be the settings</h1>
+    <h1>Settings</h1>
     <Link className="settingsBtn" to='/'>Home</Link>
     <div className="menuSelectors">
+      <a className="setDifficulty" onClick={() => { setDifficulty('easy') }}>Easy</a>
+      <a className="setDifficulty" onClick={() => { setDifficulty('medium') }}>Medium</a>
+      <a className="setDifficulty" onClick={() => { setDifficulty('hard') }}>Hard</a>
     </div>
   </div>
 )

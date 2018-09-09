@@ -1,4 +1,4 @@
-export default function Bird(p, playerImage, crashSound) {
+export default function Bird(p, playerImage, crashSound, maxHits) {
   this.playerImage = playerImage;
   this.y = p.height / 2;
   this.x = 100;
@@ -8,7 +8,9 @@ export default function Bird(p, playerImage, crashSound) {
   this.jump = -15;
   this.velocity = 0;
 
-  this.hitCount = 0;
+  this.hitCount = maxHits;
+  // this.maxHits = maxHits;
+  this.gameover = false;
   this.crashed = false;
   this.highlightDuration = 0;
   this.gameover = false;
@@ -45,15 +47,18 @@ export default function Bird(p, playerImage, crashSound) {
     if ((this.hitCeilingFloor && !this.ranSound) || this.hitPipe) {
       this.crashSound.setVolume(0.8);
       this.crashSound.play();
-      this.hitCount += 1;
+      this.hitCount -= 1;
       this.ranSound = true;
       this.hitPipe = false;
+      // if (this.hitCount === this.maxHits) this.gameover = true;
     }
     this.crashed = true;
     this.highlightDuration = p.frameCount;
   }
 
   this.getHitCount = () => this.hitCount;
+
+  this.isGameOver = () => this.hitCount === 0;
 
   this.update = () => {
     this.velocity += this.gravity;

@@ -1,29 +1,16 @@
 import React from 'react';
+import classNames from 'classnames';
 
-function PlayerSelector(props) {
+const PlayerSelector = ({ name, handlePlayerSelection, selected }) => {
+  const classes = classNames({
+    'playerSelector': true,
+    'selected': selected
+  });
   return (
-    <div className="playerSelector">
-      <h2>{props.name}</h2>
+    <div className={classes} onClick={() => { handlePlayerSelection(name) }}>
+      <img src={`./assets/img/players/${name}.png`} className="playerSelectorLogo" alt="player-logo" />
+      <h3>{name}</h3>
     </div>
   );
 }
-// <img src={props.name} className="playerLogo" alt="player-logo" />
-
-// class PlayerSelector extends Component {
-//   render() {
-//     return (
-//       <div>
-//         <img src={props.name} className="playerLogo" alt="player-logo" />
-//         <h1>{props.name}</h1>
-//       </div>
-//     );
-//   }
-// }
 export default PlayerSelector;
-
-// const PlayerSelector = (props) => (
-//   <div>
-//     <img src={props.name} className="playerLogo" alt="player-logo" />
-//     <h1>{props.name}</h1>
-//   </div>
-// )

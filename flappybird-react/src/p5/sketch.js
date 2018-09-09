@@ -20,30 +20,43 @@ export default function sketch(p) {
   let playerImage;
   let pipeColor = [250, 133, 159];
   let c;
+  let difficulty = 'easy';
+  let history;
+  let maxHits;
 
   p.myCustomRedrawAccordingToNewPropsHandler = function (props) {
-    if (props.player) {
-      console.log('props redraw');
-      setPlayerSettings(props.player);
+    if (props.player && props.difficulty) {
+      history = props.history;
+      // console.log('props redraw: ', props);
+      _setPlayerSettings(props.player.toUpperCase());
+      difficulty = props.difficulty.toUpperCase();
+      maxHits = _getMaxHits(difficulty);
+      bird = new Bird(p, playerImage, crashSound, maxHits);
+      scoreDisplay = new Display(p, bird, backgroundMusic, crashSound, props.history, maxHits);
     }
   };
 
   p.preload = function () {
-    console.log('preload');
+    // console.log('preload');
     p.soundFormats('mp3', 'ogg');
     crashSound = p.loadSound('/assets/sounds/tim_crash_short_loud.mp3');
     backgroundMusic = p.loadSound('/assets/music/unicorn.mp3');
     backgroundImage = p.loadImage('/assets/img/backgrounds/rainbow-drawing.jpg');
     playerImage = p.loadImage('/assets/img/players/unicorn.png');
+    pipeColor = [250, 133, 159];
   }
 
   p.setup = function () {
     // put setup code here
-    bird = new Bird(p, playerImage, crashSound);
-    scoreDisplay = new Display(p, bird, backgroundMusic, crashSound);
+    // bird = new Bird(p, playerImage, crashSound);
+    // scoreDisplay = new Display(p, bird, backgroundMusic, crashSound);
+    bird;
+    scoreDisplay;
+    scoreDisplay.show();
     var cnv = p.createCanvas(p.windowWidth, p.windowHeight - 60);
     // cnv.style('display', 'block');
-    pipes.push(new Pipe(p, pipeColor));
+
+    pipes.push(new Pipe(p, pipeColor, difficulty));
     //   backgroundImage.loadPixels();
     //   // get color of middle pixel
     //   c = backgroundImage.get(backgroundImage.width / 2, backgroundImage.height / 2);
@@ -115,22 +128,40 @@ export default function sketch(p) {
       prevPipeFrame + insertFrequency) {
 
       prevPipeFrame = p.frameCount;
-      pipes.push(new Pipe(p, pipeColor));
-      insertFrequency = _getRandomPipeTime(50, 90);
+      pipes.push(new Pipe(p, pipeColor, difficulty));
+      insertFrequency = _getRandomPipeTime(50, 110);
+    }
+
+    if (!backgroundMusic.isPlaying()) backgroundMusic.play();
+
+    // handle gameover
+    if (bird.isGameOver()) {
+      backgroundMusic.stop();
+      p.remove();
+      history.push('/');
     }
   }
 
-  function setPlayerSettings(player) {
+  function _getMaxHits(difficulty) {
+    if (difficulty === 'EASY') {
+      return 20;
+    } else if (difficulty === 'MEDIUM') {
+      return 15;
+    } else if (difficulty === 'HARD') {
+      return 10;
+    }
+    return 10;
+  }
+
+  function _setPlayerSettings(player) {
     switch (player) {
       case 'UNICORN':
-        console.log('unicorn');
         backgroundMusic = p.loadSound('/assets/music/unicorn.mp3');
         backgroundImage = p.loadImage('/assets/img/backgrounds/rainbow-drawing.jpg');
         playerImage = p.loadImage('/assets/img/players/unicorn.png');
         pipeColor = [250, 133, 159];
         break;
       case 'BATMAN':
-        console.log('batman');
         backgroundMusic = p.loadSound('/assets/music/bensound-epic.mp3');
         backgroundImage = p.loadImage('/assets/img/backgrounds/batman_background.jpg');
         playerImage = p.loadImage('/assets/img/players/batman.png');

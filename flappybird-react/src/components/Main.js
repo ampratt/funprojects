@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import Home from './Home'
-import Settings from './Settings'
 import Play from './Play'
 
 // The Main component renders one of the provided
@@ -11,10 +10,11 @@ const Main = () => (
   <main>
     <Switch>
       <Route exact path='/' component={Home} />
-      <Route path='/settings' component={Settings} />
       <Route path='/play' component={Play} />
     </Switch>
   </main>
 )
 
 export default Main
+
+      // <Route path='/settings' component={Settings} />
